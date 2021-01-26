@@ -20,7 +20,7 @@
 * 必填的有「網址」、「關鍵字」與「人數」。
 * 「樓層」與「時間」的開始與結束可只填其中一邊，預設會是最小與最大。
 #### 抽獎名單說明
-![image](https://raw.githubusercontent.com/Peugin/bahaluckydraw/master/MDImage/Tutorial_1.png?token=AGHGEOAEH5L5T6ENV5O4JSLACAO6E)
+![image](https://github.com/Peugin/bahaluckydraw/blob/master/MDImage/Tutorial_1.png)
 * 帳號：為一個可以點擊的超連結，點擊後會前往對方小屋。
 * 暱稱：為一個可以點擊的超連結，點擊後會前往對方小屋。
 * 發言：為一個可以點擊的超連結，點擊後會前往該發言網址。為了防止過多留言而導致版面錯亂，只會顯示前面幾個字後剩餘的刪除。圖片不會顯示在發言處。

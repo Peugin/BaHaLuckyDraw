@@ -69,7 +69,7 @@ function drawAjax(){
             }
         },
         error:function(response){
-            appendError('錯誤','可能為輸入資料有誤，請再試一次。');
+            appendError('錯誤','可能為輸入資料有誤，或搜尋的樓層過多，請再試一次。');
         }
     });
 }

@@ -31,7 +31,7 @@ public class BahaFormCrawler {
         String baseUrl = reBaseUrl(url);
         int lastPage = getLastPage(url);
         int startPage = startFloor/floorPerPage + 1;
-        IntStream.range(startPage,lastPage).parallel().forEach(
+        IntStream.range(startPage,lastPage+1).parallel().forEach(
                 page ->{
                     SimpleDateFormat sdFormat = new SimpleDateFormat(DATA_FORMAT);
                     String currentUrl = baseUrl + "&page=" + page;
@@ -68,7 +68,6 @@ public class BahaFormCrawler {
                             continue;
                         if(date.getTime() > endDate.getTime())
                             break;
-
                         bahaCrawlerDataList.add(new BahaCrawlerData(floor, userName, userID, date, article,bsn,snb));
                     }
                 }

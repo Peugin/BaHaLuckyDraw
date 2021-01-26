@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LuckyDrawController {
     @GetMapping(value = {"/","/index"})
     public String mainPage(){
-        return "/index";
+        return "index";
     }
 }

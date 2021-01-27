@@ -24,51 +24,45 @@ import java.util.stream.IntStream;
 public class BahaFormCrawler {
     private final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0";
     private final static String DATA_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final static String BASE_URL = "https://forum.gamer.com.tw/C.php?bsn=%s&snA=%s";
+    private final static String BOARD_ID_PARAM = "bsn";
+    private final static String ARTICLE_ID_PARAM = "sna";
     private final int floorPerPage = 20;
 
-    public List<BahaCrawlerData> scrapying(String url,int startFloor,int endFloor,Date startDate,Date endDate) throws IOException, URISyntaxException {
+    public List<BahaCrawlerData> scraping(String url, int startFloor, int endFloor, Date startDate, Date endDate) throws IOException, URISyntaxException {
         List<BahaCrawlerData> bahaCrawlerDataList = new LinkedList<>();
         String baseUrl = reBaseUrl(url);
         int lastPage = getLastPage(url);
         int startPage = startFloor/floorPerPage + 1;
+
         IntStream.range(startPage,lastPage+1).parallel().forEach(
                 page ->{
-                    SimpleDateFormat sdFormat = new SimpleDateFormat(DATA_FORMAT);
-                    String currentUrl = baseUrl + "&page=" + page;
-                    Document doc = null;
                     try {
-                        doc = Jsoup.connect(currentUrl).userAgent(USER_AGENT).get();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    assert doc != null;
-                    Elements postElements = doc.select("#BH-master > section[id^=post_]");
-                    for(Element postElement : postElements) {
-                        int floor = Integer.parseInt(postElement.select(".floor").attr("data-floor"));
-                        String userName = postElement.select(".username").text();
-                        String userID = postElement.select(".userid").text();
-                        int bsn = Integer.parseInt(postElement.select(".reply-input textarea").attr("data-bsn"));
-                        int snb = Integer.parseInt(postElement.select(".reply-input textarea").attr("data-snb"));
+                        SimpleDateFormat sdFormat = new SimpleDateFormat(DATA_FORMAT);
+                        String currentUrl = baseUrl + "&page=" + page;
+                        Document doc = Jsoup.connect(currentUrl).userAgent(USER_AGENT).get();
+                        Elements postElements = doc.select("#BH-master > section[id^=post_]");
+                        for(Element postElement : postElements) {
+                            int floor = Integer.parseInt(postElement.select(".floor").attr("data-floor"));
+                            String userName = postElement.select(".username").text();
+                            String userID = postElement.select(".userid").text();
+                            int bsn = Integer.parseInt(postElement.select(".reply-input textarea").attr("data-bsn"));
+                            int snb = Integer.parseInt(postElement.select(".reply-input textarea").attr("data-snb"));
+                            Date date = sdFormat.parse(postElement.select(".edittime").attr("data-mtime"));
+                            String article = postElement.select(".c-article__content").text();
 
-                        Date date = null;
-                        try {
-                            String html_date = postElement.select(".edittime").attr("data-mtime");
-                            date = sdFormat.parse(html_date);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
+                            if(floor < startFloor)
+                                continue;
+                            if(floor > endFloor)
+                                break;
+                            if(date.getTime() < startDate.getTime())
+                                continue;
+                            if(date.getTime() > endDate.getTime())
+                                break;
+                            bahaCrawlerDataList.add(new BahaCrawlerData(floor, userName, userID, date, article,bsn,snb));
                         }
-                        String article = postElement.select(".c-article__content").text();
-
-                        if(floor < startFloor)
-                            continue;
-                        if(floor > endFloor)
-                            break;
-                        assert date != null;
-                        if(date.getTime() < startDate.getTime())
-                            continue;
-                        if(date.getTime() > endDate.getTime())
-                            break;
-                        bahaCrawlerDataList.add(new BahaCrawlerData(floor, userName, userID, date, article,bsn,snb));
+                    } catch (IOException | ParseException e) {
+                        e.printStackTrace();
                     }
                 }
         );
@@ -87,15 +81,15 @@ public class BahaFormCrawler {
         String bsn = null,snA = null;
         for (NameValuePair param : params) {
             switch(param.getName()){
-                case "bsn":
+                case BOARD_ID_PARAM:
                     bsn = param.getValue();
                     break;
-                case "sna":
+                case ARTICLE_ID_PARAM:
                     snA = param.getValue();
                     break;
             }
         }
 
-        return String.format("https://forum.gamer.com.tw/C.php?bsn=%s&snA=%s",bsn,snA);
+        return String.format(BASE_URL,bsn,snA);
     }
 }

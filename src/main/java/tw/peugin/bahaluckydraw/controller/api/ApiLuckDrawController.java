@@ -8,8 +8,6 @@ import tw.peugin.bahaluckydraw.entity.BahaCrawlerData;
 import tw.peugin.bahaluckydraw.exception.ArgumentInvalidException;
 import tw.peugin.bahaluckydraw.exception.InternalServerException;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -32,6 +30,8 @@ public class ApiLuckDrawController {
                        @RequestParam(name="end_date",required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date endDate,
                        @RequestParam(name="keyword") String keyword,
                        @RequestParam(name="draw_nums") int drawNums,
+                       @RequestParam(name="black_list",required = false) List<String> blackList,
+                       @RequestParam(name="white_list",required = false) List<String> whiteList,
                        @RequestParam(name="use_regex",required = false) boolean useRegex) throws ArgumentInvalidException, InternalServerException {
 
         if(!bahaC.matcher(url).find())
@@ -44,7 +44,6 @@ public class ApiLuckDrawController {
             throw new ArgumentInvalidException("輸入的關鍵字不正確");
         if(drawNums < 0)
             throw new ArgumentInvalidException("輸入的抽獎人數不正確");
-        List<BahaCrawlerData> bahaCrawlerDataList = null;
 
         if(endFloor == null)
             endFloor = Integer.MAX_VALUE;
@@ -53,16 +52,10 @@ public class ApiLuckDrawController {
         if(endDate == null)
             endDate = new Date(Long.MAX_VALUE);
 
+        List<BahaCrawlerData> bahaCrawlerDataList = null;
+        List<BahaCrawlerData> winners = null;
         try {
-            bahaCrawlerDataList = bahaFormCrawler.scrapying(url,startFloor,endFloor,startDate,endDate);
-        } catch (Exception e) {
-            throw new InternalServerException(e,"內部網站錯誤");
-        }
-
-
-
-
-        if(bahaCrawlerDataList != null){
+            bahaCrawlerDataList = bahaFormCrawler.scraping(url,startFloor,endFloor,startDate,endDate);
             if(useRegex){
                 bahaCrawlerDataList = bahaCrawlerDataList.parallelStream()
                         .filter(data -> data.getArticle().matches(keyword)).collect(Collectors.toList());
@@ -70,16 +63,19 @@ public class ApiLuckDrawController {
                 bahaCrawlerDataList = bahaCrawlerDataList.parallelStream()
                         .filter(data -> data.getArticle().contains(keyword)).collect(Collectors.toList());
             }
-        }
+            if(blackList != null)
+                bahaCrawlerDataList = bahaCrawlerDataList.parallelStream()
+                        .filter(data -> !blackList.contains(data.getUserID())).collect(Collectors.toList());;
 
-        List<BahaCrawlerData> winners = null;
-        if(bahaCrawlerDataList != null) {
+
             winners = new LinkedList<>();
             while (winners.size() < drawNums && !bahaCrawlerDataList.isEmpty()) {
                 int luckyNumber = random.nextInt(bahaCrawlerDataList.size());
                 winners.add(bahaCrawlerDataList.get(luckyNumber));
                 bahaCrawlerDataList.remove(luckyNumber);
             }
+        } catch (Exception e) {
+            throw new InternalServerException(e,"爬蟲失敗");
         }
 
 

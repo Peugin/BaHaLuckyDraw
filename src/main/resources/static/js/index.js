@@ -9,6 +9,8 @@ function drawAjax(){
     let keyword = $('#input-keyword')[0].value;
     let draw_nums = $('#input-draw_nums')[0].value;
     let use_regex = $('#input-keyword-use-regex')[0].checked;
+    let white_list = $('#input-white_list')[0].value;
+    let black_list = $('#input-black_list')[0].value;
 
     let queryParam = 'url=' + url;
 
@@ -22,17 +24,18 @@ function drawAjax(){
         queryParam += '&draw_nums=' + draw_nums;
     if(use_regex)
         queryParam += '&use_regex=' + use_regex;
-
     if(start_date && !start_time)
         start_time= '00:00';
-
     if(end_date && !end_time)
         end_time = '23:59';
-
     if(start_date && start_time)
         queryParam += '&start_date=' + start_date + ' ' + start_time;
     if(end_date && end_time)
         queryParam += '&end_date=' + end_date + ' ' + end_time;
+    if(white_list)
+        queryParam += '&white_list=' + white_list;
+    if(black_list)
+        queryParam += '&black_list=' + black_list;
 
     $('#draw_table').children().remove();
 

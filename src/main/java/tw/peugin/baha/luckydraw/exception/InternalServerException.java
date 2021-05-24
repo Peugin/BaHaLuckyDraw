@@ -1,4 +1,4 @@
-package tw.peugin.bahaluckydraw.exception;
+package tw.peugin.baha.luckydraw.exception;
 
 public class InternalServerException extends Throwable {
     private Exception exception;

@@ -1,11 +1,12 @@
-package tw.peugin.bahaluckydraw.entity;
+package tw.peugin.baha.bahaForum.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
+import javax.persistence.Entity;
 import java.util.Date;
 
-@ComponentScan
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BahaCrawlerData {
     private int floor;
     private String userName;
@@ -14,6 +15,9 @@ public class BahaCrawlerData {
     private String article;
     private int bsn;
     private int snb;
+
+    public BahaCrawlerData() {
+    }
 
     public BahaCrawlerData(int floor, String userName, String userID, Date postDate, String article, int bsn, int snb) {
         this.floor = floor;

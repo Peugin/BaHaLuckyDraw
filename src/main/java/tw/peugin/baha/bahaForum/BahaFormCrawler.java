@@ -1,4 +1,4 @@
-package tw.peugin.bahaluckydraw;
+package tw.peugin.baha.bahaForum;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import tw.peugin.bahaluckydraw.entity.BahaCrawlerData;
+import tw.peugin.baha.bahaForum.entity.BahaCrawlerData;
 
 import java.io.IOException;
 import java.net.URI;

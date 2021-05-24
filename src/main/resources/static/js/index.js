@@ -1,4 +1,7 @@
+var gid;
+
 function drawAjax(){
+    $("#open_winners_table_model")[0].style.visibility = 'hidden';
     let url = encodeURIComponent($('#input-url')[0].value);
     let start_floor = $('#input-start_floor')[0].value;
     let end_floor = $('#input-end_floor')[0].value;
@@ -8,9 +11,9 @@ function drawAjax(){
     let end_time = $('#input-end_time')[0].value;
     let keyword = $('#input-keyword')[0].value;
     let draw_nums = $('#input-draw_nums')[0].value;
-    let use_regex = $('#input-keyword-use-regex')[0].checked;
-    let white_list = $('#input-white_list')[0].value;
+    let use_regex = $('#input-keyword-use_regex')[0].checked;
     let black_list = $('#input-black_list')[0].value;
+    let save_draw = $('#input-keyword-save_draw')[0].checked;
 
     let queryParam = 'url=' + url;
 
@@ -32,20 +35,15 @@ function drawAjax(){
         queryParam += '&start_date=' + start_date + ' ' + start_time;
     if(end_date && end_time)
         queryParam += '&end_date=' + end_date + ' ' + end_time;
-    if(white_list)
-        queryParam += '&white_list=' + white_list;
     if(black_list)
         queryParam += '&black_list=' + black_list;
+    if(save_draw)
+        queryParam += '&save_draw=' + save_draw;
 
     $('#draw_table').children().remove();
 
-    if(!url || !(/https:\/\/forum\.gamer\.com\.tw\/C\.php\?.+/.test(decodeURIComponent(url)))){
+    if(!url || !(/http(s):\/\/(forum\.gamer\.com\.tw|m\.gamer\.com\.tw\/forum)\/C\.php\?.+/.test(decodeURIComponent(url)))){
         alert("網址未填寫或網址錯誤");
-        return;
-    }
-
-    if(!keyword){
-        alert("關鍵字未填寫");
         return;
     }
 
@@ -54,8 +52,13 @@ function drawAjax(){
         return;
     }
 
+    if(save_draw && draw_nums > 99){
+        alert("儲存中獎名單時，中獎人數不得超過99人。");
+        return;
+    }
+
     $.ajax({
-        url: "/api/draw",
+        url: "/api/draw/drawWinners",
         type: "GET",
         dataType: "text",
         data: queryParam,
@@ -69,6 +72,10 @@ function drawAjax(){
                 $.each(winners,function(index,val){
                     appendWinner(index + 1,val);
                 });
+
+                gid = winners[0]['winnerGroup']['id'];
+                if(save_draw)
+                    $("#open_winners_table_model")[0].style.visibility = 'visible';
             }
         },
         error:function(response){
@@ -109,15 +116,25 @@ function appendWinner(id,json){
     );
 }
 
-function appendError(error,msg){
+function appendError(type,code,exceptionName,exceptionMsg){
     $('#draw_table').append($('<tr>')
-        .append($('<th scope="row">')
-            .text(error)
+        .append($('<th scope="row" class="text-danger">')
+            .text(type)
         )
-        .append($('<td colspan="5" scope="row">')
-            .text(msg)
+        .append($('<td scope="row" class="text-danger">')
+            .text(code)
+        )
+        .append($('<td colspan="2" scope="row" class="text-danger">')
+            .text(exceptionName)
+        )
+        .append($('<td colspan="2" scope="row" class="text-danger">')
+            .text(exceptionMsg)
         )
     );
+}
+
+function openWinnersTable(){
+    window.open('/winners/' + btoa(gid), '_blank').focus();
 }
 
 $body = $("body");
@@ -128,6 +145,10 @@ $(document).on({
       $("#loadingModal").modal("show");
     },
      ajaxStop: function() {
+      $("#btn-draw").prop('disabled', false);
+      $("#loadingModal").modal("hide");
+     },
+     ajaxComplete: function() {
       $("#btn-draw").prop('disabled', false);
       $("#loadingModal").modal("hide");
      }

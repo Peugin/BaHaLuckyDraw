@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+</head>
+<body>
+<div class="container shadow min-vh-100 py-2">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">序號</th>
+            <th scope="col">層數</th>
+            <th scope="col">帳號</th>
+            <th scope="col">暱稱</th>
+            <th scope="col">發言</th>
+            <th scope="col">發言時間</th>
+        </tr>
+        </thead>
+        <tbody id="draw_table">
+            <tr th:each="winner,iter : ${winners}">
+                <th th:text="${iter.index} + 1">序號</th>
+                <td th:text="${winner.floor}">層數</td>
+                <td>
+                    <a th:text="${winner.userID}" th:href="@{'https://home.gamer.com.tw/homeindex.php?owner='+${winner.userID}}">帳號</a>
+                </td>
+                <td>
+                    <a th:text="${winner.userName}" th:href="@{'https://home.gamer.com.tw/homeindex.php?owner='+${winner.userID}}">暱稱</a>
+                </td>
+                <td>
+                    <a th:text="${winner.article.length() <= 0 ? '' : winner.article.substring(0,T(Math).min(winner.article.length(),50))} + ' ……'" th:href="@{'https://forum.gamer.com.tw/Co.php?bsn='+${winner.bsn} + '&sn=' + ${winner.snb}}">發言</a>
+                </td>
+                <td th:text="${winner.postDate.toLocaleString()}">發言時間</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

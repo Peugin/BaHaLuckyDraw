@@ -92,16 +92,6 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="input-white_list">白名單</label>
-                        </td>
-                        <td>
-                            <div class="d-inline-block col-sm-3">
-                                <input type="text" class="form-control" id="input-white_list" placeholder="A,B,C,D">
-                            </div> &nbsp; <span class="text-info">※ 抽獎名單內將只有白名單內的人員，若要輸入多個人請以 ',' 分隔開。請輸入帳號名稱（全英文）。</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
                             <label for="input-black_list">黑名單</label>
                         </td>
                         <td>
@@ -112,12 +102,24 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="input-keyword-use-regex">使用正規表達式</label>
+                            <label for="input-keyword-use_regex">使用正規表達式</label>
                         </td>
                         <td>
                             <div class="d-inline-block p-2">
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="input-keyword-use-regex"> &nbsp; <label class="form-check-label text-info" for="input-keyword-use-regex">※ 啟用後，關鍵字會使用正規表達式。</label>
+                                    <input class="form-check-input" type="checkbox" id="input-keyword-use_regex"> &nbsp; <label class="form-check-label text-info" for="input-keyword-use_regex">※ 啟用後，關鍵字會使用正規表達式。</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="input-keyword-save_draw">儲存中獎名單</label>
+                        </td>
+                        <td>
+                            <div class="d-inline-block p-2">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="input-keyword-save_draw"> &nbsp; <label class="form-check-label text-info" for="input-keyword-save_draw">※ 啟用後，會儲存本次中獎名單，不得儲存超過99筆的中獎名單。</label>
                                 </div>
                             </div>
                         </td>
@@ -143,8 +145,10 @@
                 <tbody id="draw_table">
                 </tbody>
             </table>
-            <!--<input type="checkbox" class="btn-check" id="btn-open-new-window">
-            <label class="btn btn-primary" for="btn-open-new-window">另開新抽獎名單視窗</label>!-->
+            <div id="open_winners_table_model" style="visibility:hidden">
+                <input type="checkbox" class="btn-check" id="btn-open_winners_table" onclick="openWinnersTable()">
+                <label class="btn btn-primary" for="btn-open_winners_table">開啟中獎名單</label>
+            </div>
         </div>
     </div>
 </div>

@@ -8,11 +8,11 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfig {
 
-    @Value("${SPRING_DATASOURCE_URL}")
+    @Value("${spring.datasource.url}")
     private String dbUrl;
-    @Value("${SPRING_DATASOURCE_USERNAME}")
+    @Value("${spring.datasource.username}")
     private String userName;
-    @Value("${SPRING_DATASOURCE_PASSWORD}")
+    @Value("${spring.datasource.password}")
     private String password;
 
     @Bean

@@ -22,7 +22,7 @@ public class DatabaseConfig {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(dbUrl);
         config.setUsername(userName);
-        config.setPassword(password);
+        config.setPassword(System.getenv("SPRING_DATASOURCE_PASSWORD"));
         config.setDriverClassName(driveClassName);
         return new HikariDataSource(config);
     }

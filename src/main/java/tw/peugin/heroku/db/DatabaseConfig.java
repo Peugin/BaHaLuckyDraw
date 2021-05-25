@@ -8,13 +8,13 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfig {
 
-    @Value("${spring.datasource.url}")
+    @Value("${SPRING_DATASOURCE_URL}")
     private String dbUrl;
-    @Value("${spring.datasource.username}")
+    @Value("${SPRING_DATASOURCE_USERNAME}")
     private String userName;
     @Value("${SPRING_DATASOURCE_PASSWORD}")
     private String password;
-    @Value("${spring.datasource.driverClassName}")
+    @Value("${SPRING_DATASOURCE_DRIVER-CLASS-NAME}")
     private String driveClassName;
 
     @Bean

@@ -1,6 +1,6 @@
 # 巴哈回文抽獎系統 ─ 可輕鬆使用的巴哈回文抽獎系統
 ![image](https://github.com/Peugin/bahaluckydraw/blob/master/MDImage/Header.png)
-[使用看看](https://bahaluckydraw.herokuapp.com/index)
+[使用看看](https://bahaluckydraw.herokuapp.com/)
 ---
 ## 目錄
 * [最新更新](#最新更新)
@@ -8,12 +8,9 @@
 * [預定新增功能](#預定新增功能)
 ---
 ##最新更新
-### [v3] - 2021-05-24
-#### 新增
-* 可以支援手機版網頁了。
-* 可記錄中獎名單（單次99筆，一天後失效）。
-#### 移除
-* 黑名單系統。
+###[v3-1] - 2021-05-25
+#### 暫時修正
+* 有時候抽獎的等待圈圈提示於資料讀取完畢後還是無法消失的錯誤。
 ---
 ## 使用教學
 ### 參數說明

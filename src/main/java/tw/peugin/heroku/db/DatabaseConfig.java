@@ -12,7 +12,7 @@ public class DatabaseConfig {
     private String dbUrl;
     @Value("${spring.datasource.username}")
     private String userName;
-    @Value("${spring.datasource.password}")
+    @Value("${SPRING_DATASOURCE_PASSWORD}")
     private String password;
     @Value("${spring.datasource.driverClassName}")
     private String driveClassName;

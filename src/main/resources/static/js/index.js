@@ -62,6 +62,7 @@ function drawAjax(){
         type: "GET",
         dataType: "text",
         data: queryParam,
+        cache: false,
         success:function(response){
 
             if(response == '[]'){
@@ -137,19 +138,26 @@ function openWinnersTable(){
     window.open('/winners/' + btoa(gid), '_blank').focus();
 }
 
-$body = $("body");
-
-$(document).on({
-    ajaxStart: function() {
-      $("#btn-draw").prop('disabled', true);
-      $("#loadingModal").modal("show");
-    },
-     ajaxStop: function() {
-      $("#btn-draw").prop('disabled', false);
-      $("#loadingModal").modal("hide");
-     },
-     ajaxComplete: function() {
-      $("#btn-draw").prop('disabled', false);
-      $("#loadingModal").modal("hide");
-     }
-});
+ $(document).ajaxStart(function() {
+   $("#loadingModal").modal("show");
+ }).ajaxStop(function() {
+   setTimeout(function () {
+        $("#loadingModal").modal("hide");
+   }, 500)
+   $("#loadingModal").modal("hide");
+ }).ajaxComplete(function(){
+   setTimeout(function () {
+        $("#loadingModal").modal("hide");
+   }, 500)
+   $("#loadingModal").modal("hide");
+ }).ajaxError(function(){
+   setTimeout(function () {
+        $("#loadingModal").modal("hide");
+   }, 500)
+   $("#loadingModal").modal("hide");
+ }).ajaxSuccess(function(){
+   setTimeout(function () {
+        $("#loadingModal").modal("hide");
+   }, 500)
+   $("#loadingModal").modal("hide");
+ });

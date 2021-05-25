@@ -51,7 +51,7 @@ public class ApiLuckDrawController {
                                       @RequestParam(name="draw_nums") int drawNums,
                                       @RequestParam(name="black_list",required = false) List<String> blackList,
                                       @RequestParam(name="use_regex",required = false) boolean useRegex,
-                                      @RequestParam(name="save_draw",required = false) boolean saveDraw) throws ArgumentInvalidException, InternalServerException, IOException, URISyntaxException {
+                                      @RequestParam(name="save_draw",required = false) boolean saveDraw) throws ArgumentInvalidException, IOException, URISyntaxException {
 
         if(saveDraw && drawNums > 99)
             throw new ArgumentInvalidException("儲存中獎名單時，中獎人數不得超過99人。");
@@ -75,7 +75,7 @@ public class ApiLuckDrawController {
                     .filter(data -> !blackList.contains(data.getUserID())).collect(Collectors.toList());;
 
         while (rawWinners.size() < drawNums && !drawList.isEmpty()) {
-            int luckyNumber = random.nextInt(drawList.size());
+            int luckyNumber = random.nextInt(drawList.size()-1);
             rawWinners.add(drawList.get(luckyNumber));
             drawList.remove(luckyNumber);
         }

@@ -19,8 +19,6 @@ public class DatabaseConfig {
 
     @Bean
     public DataSource dataSource() {
-        System.out.println("pwd:" + password);
-        System.out.println("env:" + System.getenv("SPRING_DATASOURCE_PASSWORD"));
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(dbUrl);
         config.setUsername(userName);

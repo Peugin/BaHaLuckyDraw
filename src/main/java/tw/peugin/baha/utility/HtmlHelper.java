@@ -20,6 +20,7 @@ public class HtmlHelper {
             if (e.getStatusCode() == 403) {
                 try {
                     Connection.Response response = Jsoup.connect(MobileForumPage).userAgent(USER_AGENT).timeout(30000).execute();
+                    return BahaAccessStatus.Mobile;
                 } catch (HttpStatusException f) {
                     if (f.getStatusCode() == 403) {
                         return BahaAccessStatus.None;

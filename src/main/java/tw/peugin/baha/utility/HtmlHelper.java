@@ -2,6 +2,7 @@ package tw.peugin.baha.utility;
 
 import org.apache.http.HttpStatus;
 import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
@@ -12,18 +13,20 @@ public class HtmlHelper {
     private final static String MobileForumPage = "https://m.gamer.com.tw/forum/C.php";
 
     public static BahaAccessStatus testHttpStatus() throws IOException {
-        Connection.Response response = Jsoup.connect(PCForumPage).userAgent(USER_AGENT).timeout(30000).execute();
-
-        if(response.statusCode() == 200) {
+        try {
+            Connection.Response response = Jsoup.connect(PCForumPage).userAgent(USER_AGENT).timeout(30000).execute();
             return BahaAccessStatus.PC;
+        }catch (HttpStatusException e) {
+            if (e.getStatusCode() == 403) {
+                try {
+                    Connection.Response response = Jsoup.connect(MobileForumPage).userAgent(USER_AGENT).timeout(30000).execute();
+                } catch (HttpStatusException f) {
+                    if (f.getStatusCode() == 403) {
+                        return BahaAccessStatus.None;
+                    }
+                }
+            }
         }
-
-        response = Jsoup.connect(MobileForumPage).userAgent(USER_AGENT).timeout(30000).execute();
-
-        if(response.statusCode() == 200) {
-            return BahaAccessStatus.Mobile;
-        }
-
         return BahaAccessStatus.None;
     }
 }

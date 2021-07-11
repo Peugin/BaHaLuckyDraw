@@ -75,7 +75,7 @@ public class BahaFormCrawler {
         System.out.println(url);
         int lastPage = -1;
         try {
-            Document doc = Jsoup.connect(url).userAgent(USER_AGENT).get();
+            Document doc = Jsoup.connect(url).userAgent(USER_AGENT).ignoreContentType(true).get();
             lastPage = Integer.parseInt(doc.select(".c-section__main .BH-pagebtnA a").last().text());
         }catch (IOException e){
             e.printStackTrace();

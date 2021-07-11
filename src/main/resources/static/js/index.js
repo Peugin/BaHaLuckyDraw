@@ -11,9 +11,10 @@ function drawAjax(){
     let end_time = $('#input-end_time')[0].value;
     let keyword = $('#input-keyword')[0].value;
     let draw_nums = $('#input-draw_nums')[0].value;
-    let use_regex = $('#input-keyword-use_regex')[0].checked;
+    let use_regex = $('#input-use_regex')[0].checked;
     let black_list = $('#input-black_list')[0].value;
-    let save_draw = $('#input-keyword-save_draw')[0].checked;
+    let save_draw = $('#input-save_winners')[0].checked;
+    let duplicate_save_draw = $('#input-duplicate_save_draw')[0].checked;
 
     let queryParam = 'url=' + url;
 
@@ -37,8 +38,9 @@ function drawAjax(){
         queryParam += '&end_date=' + end_date + ' ' + end_time;
     if(black_list)
         queryParam += '&black_list=' + black_list;
-    if(save_draw)
-        queryParam += '&save_draw=' + save_draw;
+
+    queryParam += '&save_draw=' + save_draw;
+    queryParam += '&duplicate_save_draw=' + duplicate_save_draw;
 
     $('#draw_table').children().remove();
 

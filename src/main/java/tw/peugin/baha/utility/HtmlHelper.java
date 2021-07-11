@@ -12,13 +12,13 @@ public class HtmlHelper {
     private final static String MobileForumPage = "https://m.gamer.com.tw/forum/C.php";
 
     public static BahaAccessStatus testHttpStatus() throws IOException {
-        Connection.Response response = Jsoup.connect(PCForumPage).userAgent(USER_AGENT).execute();
+        /*Connection.Response response = Jsoup.connect(PCForumPage).userAgent(USER_AGENT).execute();
 
         if(response.statusCode() != 403) {
             return BahaAccessStatus.PC;
-        }
+        }*/
 
-        response = Jsoup.connect(MobileForumPage).userAgent(USER_AGENT).execute();
+        Connection.Response response = Jsoup.connect(MobileForumPage).userAgent(USER_AGENT).execute();
 
         if(response.statusCode() != 403) {
             return BahaAccessStatus.Mobile;

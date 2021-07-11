@@ -14,13 +14,13 @@ public class HtmlHelper {
     public static BahaAccessStatus testHttpStatus() throws IOException {
         Connection.Response response = Jsoup.connect(PCForumPage).userAgent(USER_AGENT).timeout(30000).execute();
 
-        if(response.statusCode() != 403) {
+        if(response.statusCode() == 200) {
             return BahaAccessStatus.PC;
         }
 
         response = Jsoup.connect(MobileForumPage).userAgent(USER_AGENT).timeout(30000).execute();
 
-        if(response.statusCode() != 403) {
+        if(response.statusCode() == 200) {
             return BahaAccessStatus.Mobile;
         }
 

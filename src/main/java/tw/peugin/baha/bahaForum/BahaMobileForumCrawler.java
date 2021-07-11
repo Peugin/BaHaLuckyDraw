@@ -42,7 +42,10 @@ public class BahaMobileForumCrawler implements IForumCrawler {
                         SimpleDateFormat sdFormat = new SimpleDateFormat(DATA_FORMAT);
                         String currentUrl = baseUrl + "&page=" + page;
                         Document doc = Jsoup.connect(currentUrl).userAgent(USER_AGENT).get();
+                        //Remove AD
                         doc.select("#div-gpt-ad-1519981043032-0").remove();
+                        //Remove CC
+                        doc.select(".c-post__header__info-cc").remove();
                         Elements postElements = doc.select(".cbox");
                         for(Element postElement : postElements) {
                             //本文若被刪除，不繼續處理

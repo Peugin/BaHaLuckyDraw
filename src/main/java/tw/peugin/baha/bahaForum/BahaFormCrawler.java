@@ -40,7 +40,7 @@ public class BahaFormCrawler {
                     try {
                         SimpleDateFormat sdFormat = new SimpleDateFormat(DATA_FORMAT);
                         String currentUrl = baseUrl + "&page=" + page;
-                        Document doc = Jsoup.connect(currentUrl).userAgent(USER_AGENT).get();
+                        Document doc = Jsoup.connect(currentUrl).userAgent(USER_AGENT).ignoreContentType(true).ignoreHttpErrors(true).get();
                         Elements postElements = doc.select("#BH-master > section[id^=post_]");
                         for(Element postElement : postElements) {
                             int floor = Integer.parseInt(postElement.select(".floor").attr("data-floor"));
@@ -71,7 +71,7 @@ public class BahaFormCrawler {
     }
 
     private int getLastPage(String url) throws IOException {
-        Document doc = Jsoup.connect(url).userAgent(USER_AGENT).get();
+        Document doc = Jsoup.connect(url).userAgent(USER_AGENT).ignoreContentType(true).ignoreHttpErrors(true).get();
         int lastPage = Integer.parseInt(doc.select(".c-section__main .BH-pagebtnA a").last().text());
         return lastPage;
     }

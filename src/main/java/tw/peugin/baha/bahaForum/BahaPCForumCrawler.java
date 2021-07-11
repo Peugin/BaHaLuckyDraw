@@ -34,7 +34,11 @@ public class BahaPCForumCrawler implements IForumCrawler {
         List<BahaCrawlerData> bahaCrawlerDataList = new LinkedList<>();
         String baseUrl = reBaseUrl(url);
         int lastPage = getLastPage(url);
-        int startPage = startFloor/floorPerPage + 1;
+        int startPage = startFloor/floorPerPage+1;
+
+        if(lastPage > endFloor/floorPerPage+1){
+            lastPage = endFloor/floorPerPage+1;
+        }
 
         IntStream.range(startPage,lastPage+1).parallel().forEach(
                 page ->{

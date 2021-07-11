@@ -20,8 +20,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+//電腦版爬蟲用
 @Service
-public class BahaFormCrawler {
+public class BahaPCForumCrawler implements IForumCrawler {
     private final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:84.0) Gecko/20100101 Firefox/84.0";
     private final static String DATA_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final static String BASE_URL = "https://forum.gamer.com.tw/C.php?bsn=%s&snA=%s";
@@ -70,17 +71,9 @@ public class BahaFormCrawler {
         return bahaCrawlerDataList;
     }
 
-    private int getLastPage(String url) {
-
-        System.out.println(url);
-        int lastPage = -1;
-        try {
-            Document doc = Jsoup.connect(url).userAgent(USER_AGENT).ignoreContentType(true).get();
-            System.out.println(doc);
-            lastPage = Integer.parseInt(doc.select(".c-section__main .BH-pagebtnA a").last().text());
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    private int getLastPage(String url) throws IOException {
+        Document doc = Jsoup.connect(url).userAgent(USER_AGENT).ignoreContentType(true).get();
+        int lastPage = Integer.parseInt(doc.select(".c-section__main .BH-pagebtnA a").last().text());
         return lastPage;
     }
 

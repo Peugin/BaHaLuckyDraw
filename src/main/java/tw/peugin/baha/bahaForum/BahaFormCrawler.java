@@ -70,10 +70,16 @@ public class BahaFormCrawler {
         return bahaCrawlerDataList;
     }
 
-    private int getLastPage(String url) throws IOException {
+    private int getLastPage(String url) {
+
         System.out.println(url);
-        Document doc = Jsoup.connect(url).userAgent(USER_AGENT).get();
-        int lastPage = Integer.parseInt(doc.select(".c-section__main .BH-pagebtnA a").last().text());
+        int lastPage = -1;
+        try {
+            Document doc = Jsoup.connect(url).userAgent(USER_AGENT).get();
+            lastPage = Integer.parseInt(doc.select(".c-section__main .BH-pagebtnA a").last().text());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         return lastPage;
     }
 

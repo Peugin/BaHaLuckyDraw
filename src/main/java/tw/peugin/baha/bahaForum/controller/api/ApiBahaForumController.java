@@ -1,5 +1,7 @@
 package tw.peugin.baha.bahaForum.controller.api;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +30,8 @@ public class ApiBahaForumController {
                                              @RequestParam(name="end_floor",required = false) Integer endFloor,
                                              @RequestParam(name="start_date",required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date startDate,
                                              @RequestParam(name="end_date",required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date endDate) throws ArgumentInvalidException, IOException, URISyntaxException {
+        Document doc = Jsoup.connect("https://forum.gamer.com.tw/Co.php?bsn=60076&sn=71336748").userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0").ignoreContentType(true).get();
+
         if(!bahaCPagePattern.matcher(url).find())
             throw new ArgumentInvalidException("輸入的網址不正確");
         if(endFloor != null && endFloor < 0 || (startFloor != null &&  endFloor != null && (endFloor > 0 && endFloor < startFloor)))

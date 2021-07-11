@@ -50,8 +50,8 @@ public class BahaMobileForumCrawler implements IForumCrawler {
                                 continue;
                             }
 
-                            String userName = postElement.select(".cbox_man span").get(0).text().replaceAll("\\(.*\\)","");
-                            String userID = postElement.select(".cbox_man span").get(0).text().replaceAll(".* ","").replace("(","").replace(")","");
+                            String userID = postElement.select(".cbox_man span").get(0).text().replaceAll("\\(.*\\)","");
+                            String userName = postElement.select(".cbox_man span").get(0).text().replaceAll(".* ","").replace("(","").replace(")","");
                             int floor = Integer.parseInt(postElement.select(".cbox_man span").get(1).text().replace("#",""));
                             Date date = sdFormat.parse(postElement.select(".cbox_man span").get(2).text());
                             int bsn = Integer.parseInt(postElement.select(".float-right > .morebtns > .btn_re").attr("href").replaceAll(".*bsn=", "").replaceAll("&snA=.*", ""));

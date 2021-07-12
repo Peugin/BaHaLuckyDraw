@@ -1,5 +1,4 @@
 var gid;
-
 function drawAjax(){
     $("#open_winners_table_model")[0].style.visibility = 'hidden';
     let url = encodeURIComponent($('#input-url')[0].value);
@@ -82,7 +81,9 @@ function drawAjax(){
             }
         },
         error:function(response){
-            appendError('錯誤','可能為輸入資料有誤，或搜尋的樓層過多，請再試一次。');
+            let error = JSON.parse(response['responseText']);
+            console.log(error['message']);
+            appendError('錯誤：' + error['status'],error['message']);
         }
     });
 }
@@ -119,13 +120,10 @@ function appendWinner(id,json){
     );
 }
 
-function appendError(type,code,exceptionName,exceptionMsg){
+function appendError(type,exceptionName,exceptionMsg){
     $('#draw_table').append($('<tr>')
-        .append($('<th scope="row" class="text-danger">')
+        .append($('<th colspan="2" scope="row" class="text-danger">')
             .text(type)
-        )
-        .append($('<td scope="row" class="text-danger">')
-            .text(code)
         )
         .append($('<td colspan="2" scope="row" class="text-danger">')
             .text(exceptionName)

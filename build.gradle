@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'tw.peugin'
-version = 'v4'
+version = 'v4-1'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -19,11 +19,13 @@ dependencies {
 	implementation 'org.apache.httpcomponents:httpclient:4.5.13'
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.20'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'junit:junit:4.12'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation group: 'com.h2database', name: 'h2', version: '1.4.200'
 	implementation group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '10.0.6'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 }
 

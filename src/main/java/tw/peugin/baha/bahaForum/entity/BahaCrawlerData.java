@@ -16,9 +16,6 @@ public class BahaCrawlerData {
     private int bsn;
     private int snb;
 
-    public BahaCrawlerData() {
-    }
-
     public BahaCrawlerData(int floor, String userName, String userID, Date postDate, String article, int bsn, int snb) {
         this.floor = floor;
         this.userName = userName;

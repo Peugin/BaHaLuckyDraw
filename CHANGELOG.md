@@ -5,7 +5,7 @@
 * 重複回文現在有更多選項了。
 * 可以排序、搜尋中獎者名單了。
 ###
-* Bootstrap、Font Awesome、Jquery現在改從cdn提供。
+* Bootstrap、Font Awesome、jQuery現在改從cdn提供。
 
 ## [v4-2] - 2022-02-17
 ### 修正

@@ -1,5 +1,5 @@
 # 巴哈回文抽獎系統 ─ 可輕鬆使用的巴哈回文抽獎系統
-![image](https://github.com/Peugin/BaHaLuckyDraw/blob/master/MDImage/Header.png)
+![image](https://i.imgur.com/PST0yHC.png)
 [使用看看](https://bahaluckydraw.herokuapp.com/)
 ---
 ## 目錄

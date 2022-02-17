@@ -28,7 +28,7 @@
                         <td>
                             <div class="col-sm-5">
                                 <div class="input-group">
-                                    <input id="input-url" type="url" class="form-control" placeholder="請輸入網址">
+                                    <input id="input-url" type="url" class="form-control" required="required" pattern="https://(forum\.gamer\.com\.tw|m\.gamer\.com\.tw/forum)/C\.php\?.+" oninvalid="setCustomValidity('網址不正確');" placeholder="請輸入網址">
                                 </div>
                             </div>
                         </td>
@@ -40,12 +40,12 @@
                         <td>
                             <div class="d-inline-block col-sm-2">
                                 <div class="input-group">
-                                    <input type="number" id="input-start_floor" class="form-control" placeholder="起始樓層">
+                                    <input type="number" id="input-start_floor" class="form-control" pattern="[1-9]\d+" placeholder="起始樓層">
                                 </div>
                             </div>
                             <span>樓 - </span>
                             <div class="d-inline-block col-sm-2">
-                                <input type="number" id="input-end_floor" class="form-control" placeholder="結束樓層">
+                                <input type="number" id="input-end_floor" class="form-control" pattern="[1-9]\d+"  placeholder="結束樓層">
                             </div>
                             <span>樓</span> &nbsp; <span class="text-info">※ 若不指定樓層，則全部搜尋。&nbsp;若搜尋過多樓層，可能導致搜尋過久而失敗。</span>
                         </td>
@@ -76,7 +76,7 @@
                         </td>
                         <td>
                             <div class="d-inline-block col-sm-3">
-                                <input type="text" class="form-control" id="input-keyword" placeholder="關鍵字">
+                                <input type="text" class="form-control"id="input-keyword" placeholder="關鍵字">
                             </div> &nbsp; <span class="text-info">※ 若不指定關鍵字，則全部搜尋。</span>
                         </td>
                     </tr>
@@ -86,7 +86,7 @@
                         </td>
                         <td>
                             <div class="d-inline-block col-sm-2">
-                                <input type="number" class="form-control" id="input-draw_nums" placeholder="抽獎人數">
+                                <input type="number" class="form-control" id="input-draw_nums" required="required" min="1" placeholder="抽獎人數">
                             </div> &nbsp; <span class="text-info">※ 要抽出的人數，必填。</span>
                         </td>
                     </tr>
@@ -141,7 +141,7 @@
                 <label class="btn btn-primary" for="btn-draw">抽獎！</label>
                 &nbsp;<a class="btn btn-outline-info" href="https://github.com/Peugin/BaHaLuckyDraw" role="button">Github</a>
                 &nbsp;<a class="btn btn-outline-info" href="https://home.gamer.com.tw/homeindex.php?owner=f31033103" role="button">巴哈姆特</a>
-                <span class="font-italic">[v4-1] - 2021-07-12<span>
+                <span class="font-italic">[v4-2] - 2022-02-17<span>
             </form>
             <hr/>
             <table class="table table-hover">

@@ -1,5 +1,34 @@
 var gid;
+
+$('#input-url').blur(function(event) {
+    event.target.checkValidity();
+}).bind('invalid', function(event) {
+    event.target.setCustomValidity('網址不正確');
+    setTimeout(function() {
+          event.target.reportValidity();
+          event.target.setCustomValidity('');
+    }, 1);
+});
+$('#input-draw_nums').blur(function(event) {
+    event.target.checkValidity();
+}).bind('invalid', function(event) {
+    event.target.setCustomValidity('抽獎人數不正確');
+    setTimeout(function() {
+          event.target.reportValidity();
+          event.target.setCustomValidity('');
+    }, 1);
+});
+
+function checkAllValidity(){
+    return ($('#input-url')[0].checkValidity() &&
+    $('#input-draw_nums')[0].checkValidity());
+}
+
 function drawAjax(){
+    if(!checkAllValidity()){
+        return;
+    }
+
     $("#open_winners_table_model")[0].style.visibility = 'hidden';
     let url = encodeURIComponent($('#input-url')[0].value);
     let start_floor = $('#input-start_floor')[0].value;
@@ -13,7 +42,7 @@ function drawAjax(){
     let use_regex = $('#input-use_regex')[0].checked;
     let black_list = $('#input-black_list')[0].value;
     let save_draw = $('#input-save_winners')[0].checked;
-    let duplicate_save_draw = $('#input-duplicate_save_draw')[0].checked;
+    let duplicate_post = $('#input-duplicate_post')[0].selectedOptions[0].value;
 
     let queryParam = 'url=' + url;
 
@@ -39,24 +68,11 @@ function drawAjax(){
         queryParam += '&black_list=' + black_list;
 
     queryParam += '&save_draw=' + save_draw;
-    queryParam += '&duplicate_save_draw=' + duplicate_save_draw;
+    queryParam += '&duplicate_post=' + duplicate_post;
 
     $('#draw_table').children().remove();
-
-    if(!url || !(/http(s):\/\/(forum\.gamer\.com\.tw|m\.gamer\.com\.tw\/forum)\/C\.php\?.+/.test(decodeURIComponent(url)))){
-        alert("網址未填寫或網址錯誤");
-        return;
-    }
-
-    if(!draw_nums || draw_nums <= 0){
-        alert("抽獎人數未填寫或抽獎人數不正確");
-        return;
-    }
-
-    if(save_draw && draw_nums > 99){
-        alert("儲存中獎名單時，中獎人數不得超過99人。");
-        return;
-    }
+    $('#winner_table').DataTable().clear();
+    $('#winner_table').DataTable().destroy();
 
     $.ajax({
         url: "/api/draw/drawWinners",
@@ -78,12 +94,17 @@ function drawAjax(){
                 gid = winners[0]['winnerGroup']['id'];
                 if(save_draw)
                     $("#open_winners_table_model")[0].style.visibility = 'visible';
+                $('#winner_table').DataTable();
             }
         },
         error:function(response){
-            let error = JSON.parse(response['responseText']);
-            console.log(error['message']);
-            appendError('錯誤：' + error['status'],error['message']);
+            if(response['responseText'] != undefined){
+                let error = JSON.parse(response['responseText']);
+                console.log(error['message']);
+                appendError('錯誤：' + error['status'],error['message']);
+            }else{
+                appendError('錯誤：' ,'搜尋的樓層可能過多，請填寫更少樓層。');
+            }
         }
     });
 }

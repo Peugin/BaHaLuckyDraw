@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'tw.peugin'
-version = 'v4-1'
+version = 'v5'
 sourceCompatibility = '1.8'
 
 repositories {

@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class DrawWinnersQueryParameter {
         return blackList;
     }
 
-    public void setBlackList(List<String> blackList) {
+    public void setBlack_list(List<String> blackList) {
         this.blackList = blackList;
     }
 

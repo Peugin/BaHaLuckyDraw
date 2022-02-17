@@ -48,14 +48,28 @@ public class DrawService {
                     .filter(data -> data.getArticle().contains(parameter.getKeyword())).collect(Collectors.toList());
         }
 
-        if(parameter.isDuplicateSaveDraw()){
-            Set<String> idAlreadySeen = new HashSet<>();
-            drawList.removeIf(drawer -> !idAlreadySeen.add(drawer.getUserID()));
+        Set<String> idAlreadySeen = new HashSet<>();
+        switch (parameter.getDuplicatePost()){
+            case SaveOne:
+                drawList.removeIf(drawer -> !idAlreadySeen.add(drawer.getUserID()));
+                break;
+            case Delete:
+                Map<String, Long> duplicate = drawList.stream().collect(Collectors.groupingBy(BahaCrawlerData::getUserID, Collectors.counting()));
+                for(Map.Entry<String, Long> pair : duplicate.entrySet()){
+                    if(pair.getValue() > 1){
+                        drawList.removeIf(drawer -> drawer.getUserID().equals(pair.getKey()));
+                    }
+                }
+                break;
+            case None:
+                break;
         }
 
-        if(parameter.getBlackList() != null)
+        if(parameter.getBlackList() != null) {
             drawList = drawList.parallelStream()
-                    .filter(data -> !parameter.getBlackList().contains(data.getUserID())).collect(Collectors.toList());;
+                    .filter(data -> !parameter.getBlackList().contains(data.getUserID()))
+                    .collect(Collectors.toList());
+        }
 
         while (rawWinners.size() < parameter.getDrawNums() && !drawList.isEmpty()) {
             int luckyNumber = random.nextInt(drawList.size());

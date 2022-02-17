@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>巴哈回文抽獎系統</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container shadow min-vh-100 py-2">
@@ -126,13 +127,15 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="input-duplicate_save_draw">重複回文者仍保有一個中獎資格</label>
+                            <label for="input-duplicate_post">重複回文</label>
                         </td>
                         <td>
                             <div class="d-inline-block p-2">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="input-duplicate_save_draw"> &nbsp; <label class="form-check-label text-info" for="input-duplicate_save_draw">※ 啟用後，重複回文者，保留一個中獎資格。</label>
-                                </div>
+                                <select id="input-duplicate_post" class="form-select" aria-label="Default select example">
+                                    <option value="0" selected>不特別處理</option>
+                                    <option value="1">保留一個名額</option>
+                                    <option value="2">刪除名額</option>
+                                </select>
                             </div>
                         </td>
                     </tr>
@@ -141,10 +144,10 @@
                 <label class="btn btn-primary" for="btn-draw">抽獎！</label>
                 &nbsp;<a class="btn btn-outline-info" href="https://github.com/Peugin/BaHaLuckyDraw" role="button">Github</a>
                 &nbsp;<a class="btn btn-outline-info" href="https://home.gamer.com.tw/homeindex.php?owner=f31033103" role="button">巴哈姆特</a>
-                <span class="font-italic">[v4-2] - 2022-02-17<span>
+                <span class="font-italic">[v5] - 2022-02-17<span>
             </form>
             <hr/>
-            <table class="table table-hover">
+            <table id="winner_table" class="table table-hover">
                 <thead>
                 <tr>
                     <th scope="col">序號</th>
@@ -165,8 +168,10 @@
         </div>
     </div>
 </div>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/jquery-3.5.1.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap5.min.js"></script>
 <script th:src="@{/js/index.js}"></script>
 </body>
 </html>

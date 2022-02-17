@@ -26,7 +26,7 @@ public class DrawWinnersQueryParameter {
     private List<String> blackList;
     private boolean useRegex;
     private boolean saveDraw;
-    private boolean duplicateSaveDraw;
+    private DuplicatePost duplicatePost;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
@@ -118,11 +118,11 @@ public class DrawWinnersQueryParameter {
         this.saveDraw = saveDraw;
     }
 
-    public boolean isDuplicateSaveDraw() {
-        return duplicateSaveDraw;
+    public DuplicatePost getDuplicatePost() {
+        return duplicatePost;
     }
 
-    public void setDuplicate_save_draw(boolean duplicateSaveDraw) {
-        this.duplicateSaveDraw = duplicateSaveDraw;
+    public void setDuplicate_post(DuplicatePost duplicatePost) {
+        this.duplicatePost = duplicatePost;
     }
 }

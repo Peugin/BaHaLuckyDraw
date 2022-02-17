@@ -10,12 +10,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import tw.peugin.baha.bahaForum.entity.BahaCrawlerData;
-import tw.peugin.baha.luckydraw.editorsupport.RawWinnersResponseEditorSupport;
 import tw.peugin.baha.luckydraw.entity.RawWinnersResponse;
 import tw.peugin.baha.luckydraw.entity.Winner;
 import tw.peugin.baha.luckydraw.entity.WinnerGroup;
 import tw.peugin.baha.luckydraw.exception.BadRequestException;
 import tw.peugin.baha.luckydraw.model.DrawWinnersQueryParameter;
+import tw.peugin.baha.luckydraw.model.DuplicatePost;
 import tw.peugin.baha.luckydraw.service.DrawService;
 import tw.peugin.baha.luckydraw.service.IWinnerGroupService;
 import tw.peugin.baha.luckydraw.service.IWinnerService;
@@ -34,10 +34,10 @@ public class ApiLuckDrawController {
     @Autowired
     private DrawService drawService;
 
-    @InitBinder
+    /*@InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(RawWinnersResponse.class, new RawWinnersResponseEditorSupport());
-    }
+    }*/
 
     @GetMapping("/drawWinners")
     public ResponseEntity<List<Winner>> drawWinners(@Valid @ModelAttribute DrawWinnersQueryParameter parameter) throws IOException, URISyntaxException {
